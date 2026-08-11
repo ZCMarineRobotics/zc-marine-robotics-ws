@@ -2,7 +2,6 @@
 /build/
 /install/
 /log/
-**/COLCON_IGNORE
 
 # --- Python ---
 __pycache__/
@@ -20,6 +19,7 @@ env/
 *.swp
 *.swo
 *~
+full_codebase.txt
 
 # --- OS Specific ---
 .DS_Store

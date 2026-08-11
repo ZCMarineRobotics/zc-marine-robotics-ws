@@ -72,15 +72,7 @@ xhost +local:root
 
 **Fix:** You only have the core Docker engine installed. Install the compose plugin via your package manager (e.g., `sudo apt install docker-compose-plugin` on Ubuntu or `sudo pacman -S docker-compose` on Arch).
 
-### 3. "Permission Denied" when editing files
-**Error:** You try to edit a file on your host computer, but it says it is locked or owned by `root`.
-
-**Fix:** Because the container runs as the `root` user, any *new* files you generate inside the container (like running `colcon build`) belong to root. To fix this on your host computer, run:
-```bash
-sudo chown -R $USER:$USER .
-```
-
-### 4. Build fails with a network or "NOSPLIT" error
+### 3. Build fails with a network or "NOSPLIT" error
 **Error:** `Clearsigned file isn't valid, got 'NOSPLIT'`
 
 **Fix:** This happens when an ISP intercepts HTTP traffic. Our `Dockerfile` forces HTTPS, but if it still fails, simply rerun `docker compose build`. It is usually a temporary network hiccup.
