@@ -1,0 +1,20 @@
+services:
+  robosub:
+    build:
+      context: .
+      args:
+        - USER_ID=${UID:-1000}
+        - GROUP_ID=${GID:-1000}
+        - USER_NAME=${USER_NAME:-dev}
+    image: robosub
+    network_mode: "host"
+    environment:
+      - DISPLAY=${DISPLAY}
+      - HOST_SHELL=${SHELL}
+      - USER_NAME=${USER_NAME:-dev}
+    volumes:
+      - ~/.Xauthority:/home/${USER_NAME:-dev}/.Xauthority:rw
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ./:/home/${USER_NAME:-dev}/RoboSub:rw
+    stdin_open: true
+    tty: true

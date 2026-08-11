@@ -1,0 +1,26 @@
+# --- ROS 2 Colcon Generated Artifacts ---
+/build/
+/install/
+/log/
+**/COLCON_IGNORE
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+
+# --- IDEs & Editors ---
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+.idea/
+*.swp
+*.swo
+*~
+
+# --- OS Specific ---
+.DS_Store
+Thumbs.db
