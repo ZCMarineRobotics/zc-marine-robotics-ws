@@ -1,7 +1,7 @@
 FROM osrf/ros:lyrical-desktop
 
-ARG USER_ID
-ARG GROUP_ID
+ARG USER_ID=1000
+ARG GROUP_ID=1000
 ARG USER_NAME=dev
 
 ENV HOME=/home/${USER_NAME}
