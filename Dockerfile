@@ -59,4 +59,4 @@ COPY --chown=${USER_NAME}:${USER_NAME} .config/starship.toml $HOME/.config/stars
 RUN sudo rosdep init || true
 RUN rosdep update
 
-CMD ["bash", "-c", "echo -e '\\n\\e[1;36mWelcome to the RoboSub Environment!\\e[0m\\n'; if [[ \"$HOST_SHELL\" == *zsh* ]]; then exec zsh; else exec bash; fi"]
+CMD ["bash", "-c", "echo -e '\\n\\e[1;36mWelcome to the RoboSubZC Environment!\\e[0m\\n'; if [[ \"$HOST_SHELL\" == *zsh* ]]; then exec zsh; else exec bash; fi"]

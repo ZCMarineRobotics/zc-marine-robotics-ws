@@ -1,10 +1,10 @@
 {
-    "name": "RoboSub ROS 2 Workspace",
+    "name": "RoboSubZC ROS 2 Workspace",
     "dockerComposeFile": [
         "../compose.yaml"
     ],
-    "service": "robosub",
-    "workspaceFolder": "/home/${localEnv:USER_NAME:dev}/${localEnv:WS_DIR:RoboSub}",
+    "service": "robosubzc",
+    "workspaceFolder": "/home/${localEnv:USER_NAME:dev}/${localEnv:WS_DIR:RoboSubZC}",
     "remoteUser": "${localEnv:USER_NAME:dev}",
     "customizations": {
         "vscode": {

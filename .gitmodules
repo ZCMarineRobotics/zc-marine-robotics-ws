@@ -1,0 +1,3 @@
+[submodule "src/autonomy-core"]
+	path = src/autonomy-core
+	url = https://github.com/RoboSubZC/autonomy-core.git
