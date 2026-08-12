@@ -1,0 +1,23 @@
+{
+    "name": "RoboSub ROS 2 Workspace",
+    "dockerComposeFile": [
+        "../compose.yaml"
+    ],
+    "service": "robosub",
+    "workspaceFolder": "/home/${localEnv:USER_NAME:dev}/${localEnv:WS_DIR:RoboSub}",
+    "remoteUser": "${localEnv:USER_NAME:dev}",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ranch-hand-robotics.rde-pack",
+                "ms-python.python",
+                "ms-vscode.cpptools",
+                "ms-vscode.cpptools-extension-pack",
+                "xaver.clang-format"
+            ],
+            "settings": {
+                "ros.distro": "lyrical"
+            }
+        }
+    }
+}

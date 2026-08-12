@@ -1,16 +1,10 @@
 # 1. THE LAYOUT
-# Now it goes: Username -> Directory -> Git -> Time
 format = """
-[](#03045e)\
 $username\
-[](bg:#023e8a fg:#03045e)\
 $directory\
-[](bg:#0077b6 fg:#023e8a)\
 $git_branch\
 $git_status\
-[](fg:#0077b6 bg:#caf0f8)\
 $time\
-[ ](fg:#caf0f8)\
 $line_break\
 $character"""
 
@@ -18,36 +12,35 @@ add_newline = true
 
 # 2. THE ARROW (Bottom Line)
 [character]
-success_symbol = "[❯](bold #0077b6)"
-error_symbol = "[❯](bold red)"
+success_symbol = "[>](bold #0077b6)"
+error_symbol = "[>](bold red)"
 
-# 3. USERNAME (Midnight Blue - New!)
+# 3. USERNAME (Cyan)
 [username]
 show_always = true
-style_user = "bg:#03045e fg:#ffffff"
-style_root = "bg:#03045e fg:#ffffff"
-format = '[  $user ]($style)'
+style_user = "bold #48cae4"
+style_root = "bold red"
+format = '[$user]($style) '
 
 # 4. DIRECTORY (Deep Blue)
 [directory]
-style = "bg:#023e8a fg:#ffffff"
-format = "[ $path ]($style)"
+style = "bold #023e8a"
+format = "[$path]($style) "
 truncation_length = 3
-truncation_symbol = "…/"
+truncation_symbol = ".../"
 
-# 5. GIT (Medium Blue)
+# 5. GIT (Medium Blue & Red for dirty status)
 [git_branch]
-symbol = ""
-style = "bg:#0077b6 fg:#ffffff"
-format = '[[ $symbol $branch ](fg:#ffffff bg:#0077b6)]($style)'
+style = "bold #0077b6"
+format = '\[git:[$branch]($style)\] '
 
 [git_status]
-style = "bg:#0077b6 fg:#ffffff"
-format = '[[($all_status$ahead_behind )](fg:#ffffff bg:#0077b6)]($style)'
+style = "bold #ef233c"
+format = '[$all_status$ahead_behind]($style) '
 
-# 6. TIME (Pale Blue - 12 Hour)
+# 6. TIME (Subtle Gray/Blue)
 [time]
 disabled = false
 time_format = "%l:%M %p"
-style = "bg:#caf0f8 fg:#023e8a"
-format = '[[  $time ](fg:#023e8a bg:#caf0f8)]($style)'
+style = "bold #adb5bd"
+format = '\[[$time]($style)\]'

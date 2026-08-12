@@ -12,9 +12,11 @@ services:
       - DISPLAY=${DISPLAY}
       - HOST_SHELL=${SHELL}
       - USER_NAME=${USER_NAME:-dev}
+      - WS_DIR=${WS_DIR:-RoboSub}
+      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-42}
     volumes:
       - ~/.Xauthority:/home/${USER_NAME:-dev}/.Xauthority:rw
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
-      - ./:/home/${USER_NAME:-dev}/RoboSub:rw
+      - ./:/home/${USER_NAME:-dev}/${WS_DIR:-RoboSub}:rw
     stdin_open: true
     tty: true

@@ -56,4 +56,7 @@ COPY --chown=${USER_NAME}:${USER_NAME} .config/.zshrc $HOME/.zshrc
 COPY --chown=${USER_NAME}:${USER_NAME} .config/.bashrc $HOME/.bashrc
 COPY --chown=${USER_NAME}:${USER_NAME} .config/starship.toml $HOME/.config/starship.toml
 
+RUN sudo rosdep init || true
+RUN rosdep update
+
 CMD ["bash", "-c", "echo -e '\\n\\e[1;36mWelcome to the RoboSub Environment!\\e[0m\\n'; if [[ \"$HOST_SHELL\" == *zsh* ]]; then exec zsh; else exec bash; fi"]

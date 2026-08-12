@@ -2,10 +2,11 @@
 export EDITOR='nvim'
 
 # Modern Replacement Aliases (Ubuntu Specific)
-alias ls='eza --icons'
-alias ll='eza -l --icons --group-directories-first'
-alias la='eza -la --icons --group-directories-first'
-alias lt='eza --tree --level=2 --icons'
+alias l='ls -lah'
+alias ls='eza'
+alias ll='eza -l --group-directories-first'
+alias la='eza -la --group-directories-first'
+alias lt='eza --tree --level=2'
 
 # Ubuntu binary name adjustments
 alias cat='batcat --style=plain'
@@ -14,6 +15,13 @@ alias grep='rg'
 alias find='fdfind'
 alias fd='fdfind'
 alias help='tldr'
+
+# ROS 2 Developer Aliases
+alias cb='colcon build --symlink-install'
+alias cbp='colcon build --symlink-install --packages-select'
+alias rt='ros2 topic list'
+alias rn='ros2 node list'
+alias rdi='rosdep install --from-paths src --ignore-src -y'
 
 # Shell Integrations
 if command -v fzf &> /dev/null; then
@@ -29,11 +37,11 @@ eval "$(zoxide init bash)"
 source /opt/ros/lyrical/setup.bash
 
 # Auto-source workspace if it has been built
-if [ -f "$HOME/RoboSub/install/setup.bash" ]; then
-    source "$HOME/RoboSub/install/setup.bash"
+if [ -n "$WS_DIR" ] && [ -f "$HOME/$WS_DIR/install/setup.bash" ]; then
+    source "$HOME/$WS_DIR/install/setup.bash"
 fi
 
-# Automatically jump to the RoboSub directory on startup
-if [ -d "$HOME/RoboSub" ]; then
-    cd "$HOME/RoboSub"
+# Automatically jump to the workspace directory on startup
+if [ -n "$WS_DIR" ] && [ -d "$HOME/$WS_DIR" ]; then
+    cd "$HOME/$WS_DIR"
 fi
