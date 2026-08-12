@@ -30,7 +30,7 @@ This is the recommended workflow. It injects the VS Code server directly into th
 1. Open this repository folder in VS Code.
 2. Install the official Microsoft extension: **Dev Containers** (`ms-vscode-remote.remote-containers`).
 3. A pop-up will appear in the bottom right corner asking to **Reopen in Container**. Click it! _(Alternatively, press `Ctrl+Shift+P`, type "Dev Containers: Reopen in Container", and press Enter)._
-4. Wait for the container to build (this takes a few minutes the first time).
+4. Wait for the container image to download (this takes a few seconds, depending on your internet connection).
 5. Open a new terminal in VS Code (`Ctrl + ~`) — you are now inside the ROS 2 environment!
 
 ### Method B: The Command Line (For Neovim/CLion/Other IDEs)
