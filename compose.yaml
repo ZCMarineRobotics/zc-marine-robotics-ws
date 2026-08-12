@@ -1,6 +1,6 @@
 services:
   robosubzc:
-    image: ghcr.io/RoboSubZC/robosubzc-workspace:latest
+    image: ghcr.io/robosubzc/robosubzc-workspace:latest
     build:
       context: .
       args:
