@@ -1,7 +1,8 @@
 {
-    "name": "RoboSubZC ROS 2 Workspace",
+    "name": "Windows - AMD/Intel GPU",
     "dockerComposeFile": [
-        "../compose.yaml"
+        "../../compose.yaml",
+        "override.yaml"
     ],
     "service": "robosubzc",
     "workspaceFolder": "/home/${localEnv:USER_NAME:dev}/${localEnv:WS_DIR:RoboSubZC}",

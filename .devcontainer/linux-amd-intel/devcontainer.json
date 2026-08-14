@@ -1,0 +1,24 @@
+{
+    "name": "Linux - AMD/Intel GPU",
+    "dockerComposeFile": [
+        "../../compose.yaml",
+        "override.yaml"
+    ],
+    "service": "robosubzc",
+    "workspaceFolder": "/home/${localEnv:USER_NAME:dev}/${localEnv:WS_DIR:RoboSubZC}",
+    "remoteUser": "${localEnv:USER_NAME:dev}",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ranch-hand-robotics.rde-pack",
+                "ms-python.python",
+                "ms-vscode.cpptools",
+                "ms-vscode.cpptools-extension-pack",
+                "xaver.clang-format"
+            ],
+            "settings": {
+                "ros.distro": "lyrical"
+            }
+        }
+    }
+}

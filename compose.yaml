@@ -1,12 +1,6 @@
 services:
   robosubzc:
     image: ghcr.io/robosubzc/robosubzc-workspace:latest
-    build:
-      context: .
-      args:
-        - USER_ID=${UID:-1000}
-        - GROUP_ID=${GID:-1000}
-        - USER_NAME=${USER_NAME:-dev}
     network_mode: "host"
     environment:
       - DISPLAY=${DISPLAY}
@@ -14,6 +8,9 @@ services:
       - USER_NAME=${USER_NAME:-dev}
       - WS_DIR=${WS_DIR:-RoboSubZC}
       - ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-42}
+      # Universal Qt X11 crash prevention (Safe for Win/Mac/Linux)
+      - QT_QPA_PLATFORM=xcb
+      - QT_X11_NO_MITSHM=1
     volumes:
       - ~/.Xauthority:/home/${USER_NAME:-dev}/.Xauthority:rw
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
