@@ -4,9 +4,10 @@
         "../../compose.yaml",
         "override.yaml"
     ],
-    "service": "robosubzc",
-    "workspaceFolder": "/home/${localEnv:USER_NAME:dev}/${localEnv:WS_DIR:RoboSubZC}",
+    "service": "zc-marine-robotics",
+    "workspaceFolder": "/home/${localEnv:USER_NAME:dev}/${localEnv:WS_DIR:zc_marine_robotics_ws}",
     "remoteUser": "${localEnv:USER_NAME:dev}",
+    "postStartCommand": "git submodule sync && git submodule update --init",
     "customizations": {
         "vscode": {
             "extensions": [

@@ -1,5 +1,5 @@
 services:
-  robosubzc:
+  zc-marine-robotics:
     deploy:
       resources:
         reservations:

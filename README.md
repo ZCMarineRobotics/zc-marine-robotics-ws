@@ -1,4 +1,4 @@
-# 🤖 RoboSubZC ROS 2 Development Environment
+# 🤖 ZCMarineRobotics ROS 2 Development Environment
 
 This environment provides a fully sandboxed Ubuntu system with ROS 2 Lyrical pre-installed, customized terminal tools, and seamless file sharing with your host computer.
 
@@ -14,7 +14,7 @@ Before you start, make sure your system has the following installed:
    - **Linux:** Install Docker Engine and the Docker Compose plugin via your package manager.
 3. **An X11 Server (For GUI Apps like RViz):**
    - **Linux:** Built-in. You just need the `xhost` utility.
-   - **Windows:** Built into WSL2 (WSLg). No extra setup required!
+   - **Windows/WSL:** Built into WSL2 (WSLg). No extra setup required!
    - **macOS:** You will need to install and run [XQuartz](https://www.xquartz.org/).
 
 ---
@@ -27,15 +27,19 @@ We support two different workflows depending on your editor preference.
 
 This is the recommended workflow. It injects the VS Code server directly into the container, giving you flawless C++ and Python autocomplete for ROS 2 without needing to install anything locally.
 
+Because we support different operating systems and hardware configurations, we have multiple Dev Containers tailored to your specific machine.
+
 1. Open this repository folder in VS Code.
 2. Install the official Microsoft extension: **Dev Containers** (`ms-vscode-remote.remote-containers`).
-3. A pop-up will appear in the bottom right corner asking to **Reopen in Container**. Click it! _(Alternatively, press `Ctrl+Shift+P`, type "Dev Containers: Reopen in Container", and press Enter)._
-4. Wait for the container image to download (this takes a few seconds, depending on your internet connection).
-5. Open a new terminal in VS Code (`Ctrl + ~`) — you are now inside the ROS 2 environment!
+3. Press `Ctrl+Shift+P`, type **"Dev Containers: Reopen in Container"**, and press Enter.
+4. **Select your Environment:** A dropdown menu will appear listing the available configurations. Select the one that matches your host OS and GPU (e.g., `Windows - NVIDIA GPU`, `Linux - AMD/Intel GPU`, or `Mac OS`). 
+   - *⚠️ **Crucial WSL Note:** When selecting a Dev Container configuration here, if you are using Windows Subsystem for Linux (WSL), you **must** select a **Windows** configuration, not Linux. This is the only part of the workflow where your WSL environment should be treated as Windows.*
+5. Wait for the container image to download and build (this takes a few seconds depending on your internet connection).
+6. Open a new terminal in VS Code (`Ctrl + ~`) — you are now inside the ROS 2 environment!
 
 ### Method B: The Command Line (For Neovim/CLion/Other IDEs)
 
-If you prefer a terminal-based editor like Neovim, or want to use a different IDE on your host computer, you can run the container directly from your terminal.
+If you prefer a terminal-based editor like Neovim, or want to use a different IDE on your host computer, you can run the container directly from your terminal. *(Note: This defaults to the base configuration without specific hardware overrides).*
 
 **1. Start the Container in the Background:**
 Open your terminal in this repository's folder and run:
@@ -48,7 +52,7 @@ docker compose up -d
 To drop into the custom Zsh shell, run:
 
 ```bash
-docker compose exec robosubzc zsh
+docker compose exec zc-marine-robotics zsh
 ```
 
 _(Need multiple terminal tabs? Just open a new tab on your host computer and run that `exec` command again!)_
@@ -82,7 +86,7 @@ _Note: Because we build with `--symlink-install`, any changes you make to a Pyth
 
 ## 🪞 How File Sharing Works
 
-We use a Docker feature called **Volume Mapping**. The folder you cloned on your laptop is directly linked to the `/home/dev/RoboSubZC` folder inside the container.
+We use a Docker feature called **Volume Mapping**. The folder you cloned on your laptop is directly linked to the `/home/dev/zc_marine_robotics_ws` folder inside the container.
 
 - Any file you create inside the container is instantly saved to your laptop's hard drive.
 - Any file you edit on your laptop is instantly seen by the container.

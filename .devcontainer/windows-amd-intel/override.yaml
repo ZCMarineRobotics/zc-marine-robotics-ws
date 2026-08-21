@@ -1,5 +1,5 @@
 services:
-  robosubzc:
+  zc-marine-robotics:
     devices:
       - /dev/dxg:/dev/dxg
     volumes:

@@ -1,12 +1,12 @@
 services:
-  robosubzc:
-    image: ghcr.io/robosubzc/robosubzc-workspace:latest
+  zc-marine-robotics:
+    image: ghcr.io/zcmarinerobotics/zc-marine-robotics-ws:latest
     network_mode: "host"
     environment:
       - DISPLAY=${DISPLAY}
       - HOST_SHELL=${SHELL}
       - USER_NAME=${USER_NAME:-dev}
-      - WS_DIR=${WS_DIR:-RoboSubZC}
+      - WS_DIR=${WS_DIR:-zc_marine_robotics_ws}
       - ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-42}
       # Universal Qt X11 crash prevention (Safe for Win/Mac/Linux)
       - QT_QPA_PLATFORM=xcb
@@ -14,6 +14,6 @@ services:
     volumes:
       - ~/.Xauthority:/home/${USER_NAME:-dev}/.Xauthority:rw
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
-      - ./:/home/${USER_NAME:-dev}/${WS_DIR:-RoboSubZC}:rw
+      - ./:/home/${USER_NAME:-dev}/${WS_DIR:-zc_marine_robotics_ws}:rw
     stdin_open: true
     tty: true
