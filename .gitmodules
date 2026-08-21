@@ -1,4 +1,4 @@
 [submodule "src/autonomy-core"]
 	path = src/autonomy-core
-	url =https://github.com/ZCMarineRobotics/autonomy-core.git
+	url = https://github.com/RoboSubZC/autonomy-core.git
 	branch = main
