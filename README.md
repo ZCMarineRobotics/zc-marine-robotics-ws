@@ -1,4 +1,4 @@
-# 🤖 ZC Marine Robotics — RoboSub ROS 2 Development Environment
+# 🤖 RoboSubZC ROS 2 Development Environment
 
 This environment provides a fully sandboxed Ubuntu system with ROS 2 Lyrical pre-installed, customized terminal tools, and seamless file sharing with your host computer.
 
@@ -48,7 +48,7 @@ docker compose up -d
 To drop into the custom Zsh shell, run:
 
 ```bash
-docker compose execZCMarineRobotics
+docker compose exec robosubzc zsh
 ```
 
 _(Need multiple terminal tabs? Just open a new tab on your host computer and run that `exec` command again!)_
@@ -82,7 +82,7 @@ _Note: Because we build with `--symlink-install`, any changes you make to a Pyth
 
 ## 🪞 How File Sharing Works
 
-We use a Docker feature called **Volume Mapping**. The folder you cloned on your laptop is directly linked to the `/home/dev/ZCMarineRobotics` folder inside the container.
+We use a Docker feature called **Volume Mapping**. The folder you cloned on your laptop is directly linked to the `/home/dev/RoboSubZC` folder inside the container.
 
 - Any file you create inside the container is instantly saved to your laptop's hard drive.
 - Any file you edit on your laptop is instantly seen by the container.
