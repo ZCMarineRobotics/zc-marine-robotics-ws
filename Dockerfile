@@ -23,6 +23,7 @@ RUN apt-get update && apt-get install -y \
     tealdeer \
     shared-mime-info \
     qt6-svg-plugins \
+    ros-lyrical-ros-gz \
     && rm -rf /var/lib/apt/lists/*
 
 # Create the user dynamically using your host IDs
