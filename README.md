@@ -4,65 +4,55 @@ This environment provides a fully sandboxed Ubuntu system with ROS 2 Lyrical pre
 
 ---
 
-## 📋 Prerequisites
+## 📋 Prerequisites & Local Setup Steps
 
-Before you start, make sure your system has the following installed:
+Follow these steps directly from your Windows terminal and your WSL Ubuntu environment to set up everything from scratch:
 
-1. **Git:** To clone this repository.
-2. **Docker:** The core container engine.
-   - **Windows/Mac:** Install [Docker Desktop](https://www.docker.com/products/docker-desktop/). (Windows users must ensure the WSL2 backend is enabled).
-   - **Linux:** Install Docker Engine and the Docker Compose plugin via your package manager.
-3. **An X11 Server (For GUI Apps like RViz):**
-   - **Linux:** Built-in. You just need the `xhost` utility.
-   - **Windows/WSL:** Built into WSL2 (WSLg). No extra setup required!
-   - **macOS:** You will need to install and run [XQuartz](https://www.xquartz.org/).
+1. **Install WSL2 & Ubuntu:** 
+   Open your Windows PowerShell or Command Prompt as Administrator and install WSL along with Ubuntu:
+   ```cmd
+   wsl --install Ubuntu
+   ```
+   Reboot your computer if prompted, then open your newly installed **Ubuntu** terminal to complete the user account setup.
 
----
+2. **Install Docker Engine inside Ubuntu:** Run the following commands sequentially in your Ubuntu terminal:
+   ```bash
+   sudo apt update && sudo apt install curl -y
+   curl -fsSL https://get.docker.com | sh
+   ```
 
-## 🚀 How to Launch the Environment
+3. **Configure Docker Permissions:** Add your current user to the Docker group so you can run commands without `sudo`:
+   ```bash
+   sudo usermod -aG docker $USER
+   ```
+   *(Note: Close and reopen your WSL terminal after running this command for it to take effect).*
 
-We support two different workflows depending on your editor preference.
+4. **Enable Systemd for Docker:** Configure systemd locally inside your distro so Docker starts automatically. Open `/etc/wsl.conf`:
+   ```bash
+   sudo nano /etc/wsl.conf
+   ```
+   Add the following lines, save, and exit:
+   ```ini
+   [boot]
+   systemd=true
+   ```
+   Then, shut down WSL from your terminal (`wsl.exe --shutdown`), reopen your Ubuntu terminal, and enable the Docker service:
+   ```bash
+   sudo systemctl enable --now docker
+   ```
 
-### Method A: VS Code Dev Containers (Highly Recommended)
+5. **Clone the Repository:** Pull your project repository into your WSL file system:
+   ```bash
+   git clone https://github.com/ZCMarineRobotics/zc-marine-robotics-ws.git
+   cd zc_marine_robotics_ws
+   ```
 
-This is the recommended workflow. It injects the VS Code server directly into the container, giving you flawless C++ and Python autocomplete for ROS 2 without needing to install anything locally.
-
-Because we support different operating systems and hardware configurations, we have multiple Dev Containers tailored to your specific machine.
-
-1. Open this repository folder in VS Code.
-2. Install the official Microsoft extension: **Dev Containers** (`ms-vscode-remote.remote-containers`).
-3. Press `Ctrl+Shift+P`, type **"Dev Containers: Reopen in Container"**, and press Enter.
-4. **Select your Environment:** A dropdown menu will appear listing the available configurations. Select the one that matches your host OS and GPU (e.g., `Windows - NVIDIA GPU`, `Linux - AMD/Intel GPU`, or `Mac OS`). 
-   - *⚠️ **Crucial WSL Note:** When selecting a Dev Container configuration here, if you are using Windows Subsystem for Linux (WSL), you **must** select a **Windows** configuration, not Linux. This is the only part of the workflow where your WSL environment should be treated as Windows.*
-5. Wait for the container image to download and build (this takes a few seconds depending on your internet connection).
-6. Open a new terminal in VS Code (`Ctrl + ~`) — you are now inside the ROS 2 environment!
-
-### Method B: The Command Line (For Neovim/CLion/Other IDEs)
-
-If you prefer a terminal-based editor like Neovim, or want to use a different IDE on your host computer, you can run the container directly from your terminal. *(Note: This defaults to the base configuration without specific hardware overrides).*
-
-**1. Start the Container in the Background:**
-Open your terminal in this repository's folder and run:
-
-```bash
-docker compose up -d
-```
-
-**2. Open a Terminal inside the Container:**
-To drop into the custom Zsh shell, run:
-
-```bash
-docker compose exec zc-marine-robotics zsh
-```
-
-_(Need multiple terminal tabs? Just open a new tab on your host computer and run that `exec` command again!)_
-
-**3. Stop the Container:**
-When you are done working for the day, clean up by running:
-
-```bash
-docker compose down
-```
+6. **Open in VS Code & Launch Dev Container:** 
+   Open the project folder inside VS Code by typing:
+   ```bash
+   code .
+   ```
+   Inside VS Code, install the **Dev Containers** extension (`ms-vscode-remote.remote-containers`), press `Ctrl+Shift+P`, select **"Dev Containers: Reopen in Container"**, and choose your target environment configuration.
 
 ---
 
@@ -86,45 +76,23 @@ _Note: Because we build with `--symlink-install`, any changes you make to a Pyth
 
 ## 🪞 How File Sharing Works
 
-We use a Docker feature called **Volume Mapping**. The folder you cloned on your laptop is directly linked to the `/home/dev/zc_marine_robotics_ws` folder inside the container.
+We use a Docker feature called **Volume Mapping**. The folder you cloned on your WSL distribution is directly linked to the workspace folder inside the container.
 
-- Any file you create inside the container is instantly saved to your laptop's hard drive.
-- Any file you edit on your laptop is instantly seen by the container.
+- Any file you create inside the container is instantly saved to your Linux file system.
+- Any file you edit in VS Code is instantly seen by the container.
 - If you delete the container entirely, your source code remains 100% safe on your computer.
-
----
-
-## ✨ Quality of Life: Automate Linux GUI Permissions
-
-_(Note: This section is for native Linux users only)._
-
-By default, Linux blocks containers from opening graphical windows like RViz2 for security. Instead of typing `xhost +local:root` every time you restart your computer, you can automate it!
-
-Add this single line to your host laptop's shell configuration file (`~/.bashrc` or `~/.zshrc`):
-
-```bash
-# Automatically allow local Docker containers to display GUI apps
-xhost +local:root > /dev/null 2>&1
-```
-
-Save the file and run `source ~/.bashrc` (or `.zshrc`). Now your GUI permissions will unlock automatically every time you open a terminal!
 
 ---
 
 ## 🚑 Common Troubleshooting
 
 ### 1. RViz2 or GUI apps won't open
-
 **Error:** `could not connect to display` or `qt.qpa.xcb: could not connect to display`
-
-- **Linux Fix:** Your X11 server blocked the container. Run `xhost +local:root` on your host computer.
-- **Mac Fix:** Ensure XQuartz is running, run `xhost +` in your Mac terminal, and ensure your `DISPLAY` variable is configured for Docker Mac forwarding.
+- **WSL Fix:** Ensure you are using a modern Windows version with WSLg enabled, which handles GUI forwarding automatically out of the box.
 
 ### 2. I have a bunch of red squiggly error lines in VS Code
-
-**Fix:** You opened the folder locally instead of inside the Dev Container. Make sure you install the "Dev Containers" extension and click "Reopen in Container". Your host laptop does not have ROS 2 installed, so it cannot find the libraries.
+**Fix:** You opened the folder locally instead of inside the Dev Container. Make sure you install the "Dev Containers" extension and click "Reopen in Container". Your host environment does not have ROS 2 installed locally, so it cannot find the libraries unless running inside the container.
 
 ### 3. Build fails with a network or "NOSPLIT" error
-
 **Error:** `Clearsigned file isn't valid, got 'NOSPLIT'`
 **Fix:** This happens when an ISP intercepts HTTP traffic. Our Dockerfile forces HTTPS, but if it still fails, simply rerun the build command. It is usually a temporary network hiccup.
