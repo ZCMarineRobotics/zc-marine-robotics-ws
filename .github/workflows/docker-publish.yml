@@ -78,11 +78,10 @@ jobs:
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
             bash -c "source /opt/ros/lyrical/setup.bash && ros2 pkg list | grep -q '^ros_gz_bridge$' && ros2 pkg list | grep -q '^ros_gz_sim$'"
 
-   
       - name: Run Gazebo test script
         if: hashFiles('tests/test_gazebo.sh') != ''
         run: |
           docker run --rm \
             -v "${{ github.workspace }}/tests:/tests:ro" \
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
-            bash -c "chmod +x /tests/test_gazebo.sh && /tests/test_gazebo.sh"
+            bash /tests/test_gazebo.sh
