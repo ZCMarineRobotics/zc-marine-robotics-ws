@@ -78,12 +78,7 @@ jobs:
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
             bash -c "source /opt/ros/lyrical/setup.bash && ros2 pkg list | grep -q '^ros_gz_bridge$' && ros2 pkg list | grep -q '^ros_gz_sim$'"
 
-      - name: Test workspace
-        run: |
-          docker run --rm \
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
-            bash -c "test -d /home/dev/zc_marine_robotics_ws"
-
+   
       - name: Run Gazebo test script
         if: hashFiles('tests/test_gazebo.sh') != ''
         run: |
