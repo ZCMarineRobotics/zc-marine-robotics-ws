@@ -6,7 +6,7 @@ ARG USER_NAME=dev
 
 ENV HOME=/home/${USER_NAME}
 
-RUN sed -i 's/http:/https:/g' /etc/apt/sources.list.d/*
+RUN apt-get update && apt-get install -y ca-certificates && update-ca-certificates
 
 RUN apt-get update && apt-get install -y \
     zsh \
