@@ -43,6 +43,7 @@ Follow these steps directly from your Windows terminal and your WSL Ubuntu envir
 
 5. **Clone the Repository:** Pull your project repository into your WSL file system:
    ```bash
+   cd
    git clone https://github.com/ZCMarineRobotics/zc-marine-robotics-ws.git
    cd zc_marine_robotics_ws
    ```
