@@ -1,4 +1,18 @@
-[submodule "src/autonomy-core"]
-	path = src/autonomy_core
-	url = https://github.com/ZCMarineRobotics/autonomy-core.git
-	branch = main
+[submodule "src/zc_marine_perception"]
+	path = src/zc_marine_perception
+	url = https://github.com/ZCMarineRobotics/zc-marine-perception.git
+[submodule "src/zc_marine_navigation"]
+	path = src/zc_marine_navigation
+	url = https://github.com/ZCMarineRobotics/zc-marine-navigation.git
+[submodule "src/zc_marine_control"]
+	path = src/zc_marine_control
+	url = https://github.com/ZCMarineRobotics/zc-marine-control.git
+[submodule "src/zc_marine_simulation"]
+	path = src/zc_marine_simulation
+	url = https://github.com/ZCMarineRobotics/zc-marine-simulation.git
+[submodule "src/zc_marine_description"]
+	path = src/zc_marine_description
+	url = https://github.com/ZCMarineRobotics/zc-marine-description.git
+[submodule "src/zc_marine_drivers"]
+	path = src/zc_marine_drivers
+	url = https://github.com/ZCMarineRobotics/zc-marine-drivers.git
