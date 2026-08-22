@@ -9,6 +9,7 @@ paths:
 - .config/**
 - tests/**
 - .github/workflows/docker-publish.yml
+
 workflow_dispatch:
 
 env:
@@ -92,3 +93,4 @@ steps:
         -v "${{ github.workspace }}/tests:/tests:ro" \
         ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
         bash -c "chmod +x /tests/test_gazebo.sh && /tests/test_gazebo.sh"
+```
