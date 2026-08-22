@@ -5,10 +5,10 @@ ARG GROUP_ID=1000
 ARG USER_NAME=dev
 
 ENV HOME=/home/${USER_NAME}
-
-RUN apt-get update && apt-get install -y ca-certificates && update-ca-certificates
+ENV GZ_VERSION=jetty
 
 RUN apt-get update && apt-get install -y \
+    ca-certificates \
     zsh \
     git \
     curl \
@@ -28,6 +28,15 @@ RUN apt-get update && apt-get install -y \
     ros-lyrical-robot-state-publisher \
     ros-lyrical-xacro \
     && rm -rf /var/lib/apt/lists/*
+
+# Install Gazebo Jetty
+RUN curl -fsSL https://packages.osrfoundation.org/gazebo.gpg \
+    -o /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg && \
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] https://packages.osrfoundation.org/gazebo/ubuntu-stable $(. /etc/os-release && echo ${UBUNTU_CODENAME}) main" \
+    > /etc/apt/sources.list.d/gazebo-stable.list && \
+    apt-get update && \
+    apt-get install -y gz-jetty && \
+    rm -rf /var/lib/apt/lists/*
 
 # Create the user dynamically using your host IDs
 RUN if getent group ${GROUP_ID}; then \
@@ -52,7 +61,9 @@ USER ${USER_NAME}
 WORKDIR ${HOME}
 
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-RUN git clone https://github.com/zsh-users/zsh-autosuggestions $HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+
+RUN git clone https://github.com/zsh-users/zsh-autosuggestions \
+    $HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 
 RUN mkdir -p $HOME/.config
 
