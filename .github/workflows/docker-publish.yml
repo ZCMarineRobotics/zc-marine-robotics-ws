@@ -1,96 +1,93 @@
 name: Build and Publish Docker Image
 
 on:
-push:
-branches:
-- main
-paths:
-- Dockerfile
-- .config/**
-- tests/**
-- .github/workflows/docker-publish.yml
-
-workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - Dockerfile
+      - .config/**
+      - tests/**
+      - .github/workflows/docker-publish.yml
+  workflow_dispatch:
 
 env:
-REGISTRY: ghcr.io
-IMAGE_NAME: zcmarinerobotics/zc-marine-robotics-ws
+  REGISTRY: ghcr.io
+  IMAGE_NAME: zcmarinerobotics/zc-marine-robotics-ws
 
 jobs:
-build-and-push-image:
-runs-on: ubuntu-latest
+  build-and-push-image:
+    runs-on: ubuntu-latest
 
-```
-permissions:
-  contents: read
-  packages: write
+    permissions:
+      contents: read
+      packages: write
 
-steps:
-  - name: Checkout repository
-    uses: actions/checkout@v7
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
 
-  - name: Set up Docker Buildx
-    uses: docker/setup-buildx-action@v4
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
 
-  - name: Log in to the Container registry
-    uses: docker/login-action@v4
-    with:
-      registry: ${{ env.REGISTRY }}
-      username: ${{ github.actor }}
-      password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Log in to the Container registry
+        uses: docker/login-action@v4
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-  - name: Extract metadata
-    id: meta
-    uses: docker/metadata-action@v6
-    with:
-      images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-      tags: |
-        type=raw,value=latest,enable={{is_default_branch}}
-        type=sha,format=long
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v6
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=sha,format=long
 
-  - name: Build and push Docker image
-    uses: docker/build-push-action@v7
-    with:
-      context: .
-      push: true
-      tags: ${{ steps.meta.outputs.tags }}
-      labels: ${{ steps.meta.outputs.labels }}
-      cache-from: type=gha
-      cache-to: type=gha,mode=max
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
-  - name: Pull published Docker image
-    run: |
-      docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+      - name: Pull published Docker image
+        run: |
+          docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
 
-  - name: Test ROS 2 installation
-    run: |
-      docker run --rm \
-        ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
-        bash -c "source /opt/ros/lyrical/setup.bash && ros2 --help"
+      - name: Test ROS 2 installation
+        run: |
+          docker run --rm \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
+            bash -c "source /opt/ros/lyrical/setup.bash && ros2 --help"
 
-  - name: Test Gazebo installation
-    run: |
-      docker run --rm \
-        ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
-        bash -c "gz sim --version"
+      - name: Test Gazebo installation
+        run: |
+          docker run --rm \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
+            bash -c "gz sim --version"
 
-  - name: Test ROS 2 Gazebo packages
-    run: |
-      docker run --rm \
-        ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
-        bash -c "source /opt/ros/lyrical/setup.bash && ros2 pkg list | grep -q '^ros_gz_bridge$' && ros2 pkg list | grep -q '^ros_gz_sim$'"
+      - name: Test ROS 2 Gazebo packages
+        run: |
+          docker run --rm \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
+            bash -c "source /opt/ros/lyrical/setup.bash && ros2 pkg list | grep -q '^ros_gz_bridge$' && ros2 pkg list | grep -q '^ros_gz_sim$'"
 
-  - name: Test workspace
-    run: |
-      docker run --rm \
-        ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
-        bash -c "test -d /home/dev/zc_marine_robotics_ws"
+      - name: Test workspace
+        run: |
+          docker run --rm \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
+            bash -c "test -d /home/dev/zc_marine_robotics_ws"
 
-  - name: Run Gazebo test script
-    if: hashFiles('tests/test_gazebo.sh') != ''
-    run: |
-      docker run --rm \
-        -v "${{ github.workspace }}/tests:/tests:ro" \
-        ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
-        bash -c "chmod +x /tests/test_gazebo.sh && /tests/test_gazebo.sh"
-```
+      - name: Run Gazebo test script
+        if: hashFiles('tests/test_gazebo.sh') != ''
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}/tests:/tests:ro" \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
+            bash -c "chmod +x /tests/test_gazebo.sh && /tests/test_gazebo.sh"
