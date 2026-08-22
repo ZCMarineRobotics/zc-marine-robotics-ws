@@ -2,10 +2,12 @@ name: Build and Publish Docker Image
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
     paths:
-      - 'Dockerfile'
-      - '.config/**'
+      - "Dockerfile"
+      - ".config/**"
+      - "tests/**"
+      - ".github/workflows/docker-publish.yml"
   workflow_dispatch:
 
 env:
@@ -15,6 +17,7 @@ env:
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
+
     permissions:
       contents: read
       packages: write
@@ -33,7 +36,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata (tags, labels) for Docker
+      - name: Extract metadata
         id: meta
         uses: docker/metadata-action@v6
         with:
@@ -51,3 +54,40 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      # Test the published image
+      - name: Pull published Docker image
+        run: |
+          docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+
+      - name: Test ROS 2 installation
+        run: |
+          docker run --rm \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
+            bash -c "source /opt/ros/lyrical/setup.bash && ros2 --version"
+
+      - name: Test Gazebo installation
+        run: |
+          docker run --rm \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
+            bash -c "gz sim --version"
+
+      - name: Test ROS 2 Gazebo packages
+        run: |
+          docker run --rm \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
+            bash -c "source /opt/ros/lyrical/setup.bash && ros2 pkg list | grep -E 'ros_gz|gazebo'"
+
+      - name: Test workspace
+        run: |
+          docker run --rm \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
+            bash -c "test -d /home/dev/zc_marine_robotics_ws"
+
+      - name: Run Gazebo test script
+        if: ${{ hashFiles('tests/test_gazebo.sh') != '' }}
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}/tests:/tests:ro" \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
+            bash -c "chmod +x /tests/test_gazebo.sh && /tests/test_gazebo.sh"
