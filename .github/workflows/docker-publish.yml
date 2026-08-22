@@ -7,7 +7,7 @@ on:
     paths:
       - Dockerfile
       - .config/**
-      - .github/workflows/docker-publish.yml
+      - .github/workflows/**
   workflow_dispatch:
 
 env:
@@ -15,9 +15,12 @@ env:
   IMAGE_NAME: zcmarinerobotics/zc-marine-robotics-ws
 
 jobs:
-  build-and-push-image:
-    runs-on: ubuntu-latest
+  build:
+    uses: ./.github/workflows/docker-build.yml
 
+  publish-image:
+    needs: build
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
