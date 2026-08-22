@@ -60,11 +60,11 @@ jobs:
         run: |
           docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
 
-      - name: Test ROS 2 installation
-        run: |
-          docker run --rm \
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
-            bash -c "source /opt/ros/lyrical/setup.bash && ros2 --version"
+     - name: Test ROS 2 installation
+  run: |
+    docker run --rm \
+      ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
+      bash -c "source /opt/ros/lyrical/setup.bash && ros2 --help"
 
       - name: Test Gazebo installation
         run: |
