@@ -24,6 +24,9 @@ RUN apt-get update && apt-get install -y \
     shared-mime-info \
     qt6-svg-plugins \
     ros-lyrical-ros-gz \
+    ros-lyrical-gz-ros2-control \
+    ros-lyrical-robot-state-publisher \
+    ros-lyrical-xacro \
     && rm -rf /var/lib/apt/lists/*
 
 # Create the user dynamically using your host IDs
