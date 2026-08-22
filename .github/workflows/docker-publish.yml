@@ -92,4 +92,3 @@ steps:
         -v "${{ github.workspace }}/tests:/tests:ro" \
         ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
         bash -c "chmod +x /tests/test_gazebo.sh && /tests/test_gazebo.sh"
-
