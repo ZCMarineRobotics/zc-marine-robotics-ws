@@ -1,5 +1,5 @@
 {
-    "name": "Linux - AMD/Intel GPU",
+    "name": "WSL - NVIDIA GPU",
     "dockerComposeFile": [
         "../../compose.yaml",
         "override.yaml"

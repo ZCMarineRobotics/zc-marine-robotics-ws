@@ -1,7 +1,8 @@
 {
-    "name": "Mac OS (CPU Rendering)",
+    "name": "WSL - AMD/Intel GPU",
     "dockerComposeFile": [
-        "../../compose.yaml"
+        "../../compose.yaml",
+        "override.yaml"
     ],
     "service": "zc-marine-robotics",
     "workspaceFolder": "/home/${localEnv:USER_NAME:dev}/${localEnv:WS_DIR:zc_marine_robotics_ws}",

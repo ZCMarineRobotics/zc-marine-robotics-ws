@@ -4,7 +4,6 @@ $username\
 $directory\
 $git_branch\
 $git_status\
-$time\
 $line_break\
 $character"""
 
@@ -37,10 +36,3 @@ format = '\[git:[$branch]($style)\] '
 [git_status]
 style = "bold #ef233c"
 format = '[$all_status$ahead_behind]($style) '
-
-# 6. TIME (Subtle Gray/Blue)
-[time]
-disabled = false
-time_format = "%l:%M %p"
-style = "bold #adb5bd"
-format = '\[[$time]($style)\]'

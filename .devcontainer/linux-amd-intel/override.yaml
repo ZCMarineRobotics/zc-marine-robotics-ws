@@ -1,4 +1,0 @@
-services:
-  zc-marine-robotics:
-    devices:
-      - /dev/dri:/dev/dri

@@ -2,18 +2,20 @@ services:
   zc-marine-robotics:
     image: ghcr.io/zcmarinerobotics/zc-marine-robotics-ws:latest
     network_mode: "host"
+    ipc: "host"
     environment:
       - DISPLAY=${DISPLAY}
+      - WAYLAND_DISPLAY=${WAYLAND_DISPLAY}
+      - XDG_RUNTIME_DIR=/tmp
+      - PULSE_SERVER=${PULSE_SERVER}
       - HOST_SHELL=${SHELL}
       - USER_NAME=${USER_NAME:-dev}
       - WS_DIR=${WS_DIR:-zc_marine_robotics_ws}
       - ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-42}
-      # Universal Qt X11 crash prevention (Safe for Win/Mac/Linux)
       - QT_QPA_PLATFORM=xcb
-      - QT_X11_NO_MITSHM=1
     volumes:
-      - ~/.Xauthority:/home/${USER_NAME:-dev}/.Xauthority:rw
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /mnt/wslg:/mnt/wslg:rw
       - ./:/home/${USER_NAME:-dev}/${WS_DIR:-zc_marine_robotics_ws}:rw
     stdin_open: true
     tty: true

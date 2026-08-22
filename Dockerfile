@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y \
     zsh \
     git \
     curl \
+    mesa-utils \
     neovim \
     tmux \
     fzf \
