@@ -60,7 +60,7 @@ jobs:
         run: |
           docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
 
-            - name: Test ROS 2 installation
+      - name: Test ROS 2 installation
         run: |
           docker run --rm \
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
