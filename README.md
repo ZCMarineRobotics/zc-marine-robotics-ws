@@ -8,7 +8,7 @@ This environment provides a fully sandboxed Ubuntu system with ROS 2 Lyrical pre
 
 Follow these steps directly from your Windows terminal and your WSL Ubuntu environment to set up everything from scratch:
 
-1. **Install WSL2 & Ubuntu:** 
+1. **Install WSL2 & Ubuntu:**
    Open your Windows PowerShell or Command Prompt as Administrator and install WSL along with Ubuntu:
    ```cmd
    wsl --install Ubuntu
@@ -47,7 +47,7 @@ Follow these steps directly from your Windows terminal and your WSL Ubuntu envir
    git clone https://github.com/ZCMarineRobotics/zc-marine-robotics-ws.git && cd zc-marine-robotics-ws
    ```
 
-6. **Open in VS Code & Launch Dev Container:** 
+6. **Open in VS Code & Launch Dev Container:**
    Open the project folder inside VS Code by typing:
    ```bash
    code .
@@ -71,6 +71,27 @@ To make development faster, this environment comes pre-loaded with custom termin
 | `rn`        | `ros2 node list`                                         | Lists all active ROS 2 nodes.                       |
 
 _Note: Because we build with `--symlink-install`, any changes you make to a Python file will take effect instantly. You only need to rebuild (`cb` / `cbp`) when you change C++ code or package configurations!_
+
+---
+
+## 🔄 Resuming Your Work
+
+Once you have shut down your computer or closed your terminals, you do not need to repeat the initial setup. Here is how to quickly jump back into your ROS 2 environment:
+
+1. **Open your Ubuntu Terminal:** 
+   Launch the "Ubuntu" app directly from your Windows Start menu, or simply type `wsl` into your standard Windows PowerShell.
+2. **Navigate to the Workspace:** 
+   Move into the project folder you cloned previously:
+   ```bash
+   cd ~/zc-marine-robotics-ws
+   ```
+3. **Launch VS Code:** 
+   Open the editor directly from your Ubuntu terminal:
+   ```bash
+   code .
+   ```
+4. **Reopen in Container:** 
+   VS Code will often detect the `.devcontainer` folder and show a pop-up in the bottom right asking to **"Reopen in Container"**. If it doesn't, simply press `Ctrl+Shift+P` and select **"Dev Containers: Reopen in Container"**. Because Docker is running in the background via systemd, your environment will spin up in seconds with all your previous files intact.
 
 ---
 
