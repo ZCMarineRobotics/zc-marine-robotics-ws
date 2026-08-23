@@ -1,0 +1,25 @@
+name: ROS 2 Workspace Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-workspace:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/zcmarinerobotics/zc-marine-robotics-ws:latest
+    
+    steps:
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v7
+        with:
+          submodules: recursive
+          
+      - name: Build Workspace
+        run: |
+          # Source the ROS 2 environment and compile the workspace
+          source /opt/ros/lyrical/setup.bash
+          colcon build --symlink-install --event-handlers console_direct+
