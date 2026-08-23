@@ -16,3 +16,6 @@
 [submodule "src/zc_marine_drivers"]
 	path = src/zc_marine_drivers
 	url = https://github.com/ZCMarineRobotics/zc-marine-drivers.git
+[submodule "src/zc_marine_interfaces"]
+	path = src/zc_marine_interfaces
+	url = https://github.com/ZCMarineRobotics/zc-marine-interfaces.git
