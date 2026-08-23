@@ -20,6 +20,7 @@ jobs:
           submodules: recursive
           
       - name: Build Workspace
+        shell: bash
         run: |
           source /opt/ros/lyrical/setup.bash
           colcon build --symlink-install --event-handlers console_direct+
