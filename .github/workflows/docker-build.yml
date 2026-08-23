@@ -4,10 +4,6 @@ on:
   pull_request:
     branches:
       - main
-    paths:
-      - Dockerfile
-      - .config/**
-      - .github/workflows/**
   workflow_call:
 
 jobs:
