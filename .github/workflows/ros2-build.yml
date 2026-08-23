@@ -11,15 +11,15 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/zcmarinerobotics/zc-marine-robotics-ws:latest
+      options: --user root
     
     steps:
       - name: Checkout repository and submodules
-        uses: actions/checkout@v7
+        uses: actions/checkout@v4
         with:
           submodules: recursive
           
       - name: Build Workspace
         run: |
-          # Source the ROS 2 environment and compile the workspace
           source /opt/ros/lyrical/setup.bash
           colcon build --symlink-install --event-handlers console_direct+
